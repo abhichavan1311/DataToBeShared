@@ -1,0 +1,21 @@
+#!/bin/bash
+#ssh'ing into different servers
+
+# Check for correct number of arguments
+if [ "$#" -lt 3 ]; then
+    echo "Usage: $0 <user@remote_host> <command1> [<command2> ... <commandN>]"
+    exit 1
+fi
+
+# Get the remote user and host
+REMOTE="$1"
+shift
+
+# Commands to be executed on the remote machine
+COMMANDS="$@"
+
+# SSH options to automatically accept new host keys
+SSH_OPTIONS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
+# Execute commands on the remote machine
+ssh $SSH_OPTIONS "$REMOTE" "$COMMANDS"
